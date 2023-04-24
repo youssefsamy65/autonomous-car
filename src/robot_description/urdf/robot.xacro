@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+
+<robot name="iRobot" xmlns:xacro="https://www.ros.org/wiki/xacro" >
+  <xacro:include filename="$(find robot_description)/urdf/materials.xacro" /> 
+  <xacro:include filename="$(find robot_description)/urdf/gazebo.xacro" /> 
+  <xacro:include filename="$(find robot_description)/urdf/macro.xacro" />
+  <link name="robot_footprint"/>  
+  <joint name="ahla_joint_1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="robot_footprint"/>
+      <child link="base_link" />
+  </joint>
+  <link name="base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+  <joint name="base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="chassis"/>
+  </joint>
+  <xacro:link_axis name="link_right_axis" />
+  <xacro:link_axis name="link_left_axis" />
+  <xacro:link_wheel name="link_right_wheel" />
+  <xacro:link_wheel name="link_left_wheel" />
+  <xacro:sphere name="sphere1" />
+  <xacro:sphere name="sphere2" />
+  <xacro:link_chasis name="chassis" />
+  <xacro:laser name="hokuyo_laser_link" /> 
+   
+  <joint name="hokuyo_laser_joint" type="fixed">
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0 0 0.06"/>
+    <parent link="base_link"/>
+    <child link="hokuyo_laser_link"/>
+  </joint>
+
+                
+  
+  <joint name="right_axis_base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.14 -0.02"/>
+    <parent link="link_chassis"/>
+    <child link="link_right_axis"/>
+  </joint>
+  
+  <joint name="left_axis_base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.14 -0.02"/>
+    <parent link="link_chassis"/>
+    <child link="link_left_axis"/>
+  </joint>
+  
+  <joint name="right_wheel_rot_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="1.0" friction="0.0"/>
+    <parent link="link_right_axis"/>
+    <child link="link_right_wheel"/>
+  </joint>
+  
+  <joint name="left_wheel_rot_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="1.0" friction="0.0"/>
+    <parent link="link_left_axis"/>
+    <child link="link_left_wheel"/>
+  </joint>
+  
+  <joint name="sphere_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0.14 0 -0.04"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="0" upper="0" velocity="100"/>
+    <parent link="chassis"/>
+    <child link="sphere1"/>
+  </joint>
+  
+  <joint name="sphere_joint2" type="revolute">
+    <origin rpy="0 0 0" xyz="0.14 0 -0.04"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="0" upper="0" velocity="100"/>
+    <parent link="chassis"/>
+    <child link="sphere2"/>
+  </joint>      
+    
+
+  
+  
+</robot>
